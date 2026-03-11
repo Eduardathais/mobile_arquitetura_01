@@ -21,6 +21,7 @@ class ProductRepositoryImpl implements ProductRepository {
                 title: m.title,
                 price: m.price,
                 image: m.image,
+                isFavorite: false,
               ))
           .toList();
     } catch (e) {

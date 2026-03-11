@@ -1,6 +1,5 @@
 import 'package:product_app/domain/repositories/product_repository.dart';
 import 'package:flutter/foundation.dart';
-import 'package:product_app/domain/entities/product.dart';
 import 'package:product_app/presentation/states/product_state.dart';
 
 class ProductViewModel {
