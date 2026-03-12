@@ -10,8 +10,11 @@ class ProductPage extends ConsumerWidget {
     final state = ref.watch(productListProvider);
     final notifier = ref.read(productListProvider.notifier);
 
+    final favCount = state.favoriteCount;
     return Scaffold(
-      appBar: AppBar(title: const Text('Products')),
+      appBar: AppBar(
+        title: Text('Products${favCount > 0 ? ' ($favCount fav${favCount > 1 ? 's' : ''})' : ''}'),
+      ),
       body: Builder(
         builder: (context) {
           if (state.isLoading) {
@@ -29,6 +32,9 @@ class ProductPage extends ConsumerWidget {
             itemBuilder: (context, index) {
               final product = state.products[index];
               return ListTile(
+                tileColor: product.isFavorite
+                    ? Colors.pink.withAlpha((0.2 * 255).round())
+                    : null,
                 leading: SizedBox(
                   width: 60,
                   height: 60,

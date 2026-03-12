@@ -6,30 +6,25 @@ import 'package:product_app/data/repositories/product_repository_impl.dart';
 import 'package:product_app/domain/repositories/product_repository.dart';
 import 'package:product_app/presentation/states/product_state.dart';
 
-/// Provides a shared HTTP client instance.
 final httpClientProvider = Provider<HttpClient>((ref) {
   return HttpClient();
 });
 
-/// Remote datasource that uses the HTTP client.
 final productRemoteDatasourceProvider = Provider<ProductRemoteDatasource>((ref) {
   final client = ref.watch(httpClientProvider);
   return ProductRemoteDatasource(client);
 });
 
-/// Cache datasource for simple in-memory caching.
 final productCacheDatasourceProvider = Provider<ProductCacheDatasource>((ref) {
   return ProductCacheDatasourceImpl();
 });
 
-/// Repository implementation which combines remote and cache datasources.
 final productRepositoryProvider = Provider<ProductRepository>((ref) {
   final remote = ref.watch(productRemoteDatasourceProvider);
   final cache = ref.watch(productCacheDatasourceProvider);
   return ProductRepositoryImpl(remote, cache);
 });
 
-/// State notifier that drives the product list + loading/error state.
 class ProductListNotifier extends StateNotifier<ProductState> {
   final ProductRepository repository;
 
@@ -61,9 +56,13 @@ class ProductListNotifier extends StateNotifier<ProductState> {
   }
 }
 
-/// Public provider for the product list state.
 final productListProvider =
     StateNotifierProvider<ProductListNotifier, ProductState>((ref) {
   final repo = ref.watch(productRepositoryProvider);
   return ProductListNotifier(repo);
 });
+
+extension ProductStateX on ProductState {
+  int get favoriteCount =>
+      products.where((p) => p.isFavorite).length;
+}
