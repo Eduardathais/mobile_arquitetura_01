@@ -9,3 +9,11 @@ Seria uma violação da organização arquitetural em camadas e qualquer altera�
 
 ### 4. Como essa arquitetura facilitaria a substituição da API por um banco de dados local?
 Se for necessário trocar a API por um banco de dados local ViewModel e UI não mudam, apenas altera-se a implementação do Datasource, cria-se um ProductLocalDatasource que implementa a mesma interface e o Repository pra usar esse Datasource local.
+
+## Atividades 5, 6 e 7: 
+A lista de produtos permite favoritar o produto e conta quantos são os favoritos. Adiconada tela inicial e tela com detalhamento do produto:
+
+
+<img width="300" height="600" alt="image" src="https://github.com/user-attachments/assets/9b1cf4b3-0dd1-4e25-9620-848014a0d3b0" />
+<img width="300" height="600" alt="image" src="https://github.com/user-attachments/assets/26c86a0a-be7f-45d5-b093-b7eadd71cc73" />
+<img width="300" height="600" alt="image" src="https://github.com/user-attachments/assets/ce222fed-9ae9-4d2b-8924-8f8f960be7aa" />
