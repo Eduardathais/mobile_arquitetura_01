@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:product_app/presentation/pages/initial_page.dart';
 import 'package:product_app/presentation/pages/product_page.dart';
 
 void main() {
@@ -16,7 +17,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const ProductPage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const InitialPage(),
+        '/products': (context) => const ProductPage(),
+      },
     );
   }
 }

@@ -20,6 +20,7 @@ class ProductRepositoryImpl implements ProductRepository {
                 id: m.id,
                 title: m.title,
                 price: m.price,
+                description: m.description,
                 image: m.image,
                 isFavorite: false,
               ))
@@ -32,6 +33,7 @@ class ProductRepositoryImpl implements ProductRepository {
                   id: m.id,
                   title: m.title,
                   price: m.price,
+                  description: m.description,
                   image: m.image,
                 ))
             .toList();

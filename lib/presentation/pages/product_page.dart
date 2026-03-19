@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:product_app/presentation/providers/product_provider.dart';
+import 'package:product_app/presentation/pages/product_details_page.dart';
 
 class ProductPage extends ConsumerWidget {
   const ProductPage({super.key});
@@ -32,6 +33,14 @@ class ProductPage extends ConsumerWidget {
             itemBuilder: (context, index) {
               final product = state.products[index];
               return ListTile(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ProductDetailsPage(product: product),
+                    ),
+                  );
+                },
                 tileColor: product.isFavorite
                     ? Colors.pink.withAlpha((0.2 * 255).round())
                     : null,
