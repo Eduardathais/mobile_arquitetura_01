@@ -6,7 +6,9 @@ class ProductModel {
   final double price;
   final String description;
   final String category;
-  final String image;
+  final String thumbnail;
+  final double rating;
+  final int stock;
   final bool isFavorite;
 
   ProductModel({
@@ -15,18 +17,22 @@ class ProductModel {
     required this.price,
     required this.description,
     required this.category,
-    required this.image,
+    required this.thumbnail,
+    this.rating = 0,
+    this.stock = 0,
     this.isFavorite = false,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
-      id: json["id"],
-      title: json["title"],
+      id: json['id'],
+      title: json['title'],
       price: (json['price'] as num).toDouble(),
-      description: (json["description"] as String?) ?? '',
-      category: (json["category"] as String?) ?? 'Sem categoria',
-      image: json["image"],
+      description: (json['description'] as String?) ?? '',
+      category: (json['category'] as String?) ?? 'Sem categoria',
+      thumbnail: json['thumbnail'] ?? '',
+      rating: (json['rating'] as num?)?.toDouble() ?? 0,
+      stock: (json['stock'] as int?) ?? 0,
       isFavorite: false,
     );
   }
@@ -38,7 +44,9 @@ class ProductModel {
       price: (map['price'] as num).toDouble(),
       description: map['description'] as String? ?? '',
       category: map['category'] as String? ?? 'Sem categoria',
-      image: map['image'] as String? ?? '',
+      thumbnail: map['image'] as String? ?? '',
+      rating: (map['rating'] as num?)?.toDouble() ?? 0,
+      stock: (map['stock'] as int?) ?? 0,
       isFavorite: (map['is_favorite'] as int? ?? 0) == 1,
     );
   }
@@ -50,7 +58,9 @@ class ProductModel {
       price: price,
       description: description,
       category: category,
-      image: image,
+      thumbnail: thumbnail,
+      rating: rating,
+      stock: stock,
       isFavorite: isFavorite,
     );
   }
@@ -62,7 +72,9 @@ class ProductModel {
       price: product.price,
       description: product.description,
       category: product.category,
-      image: product.image,
+      thumbnail: product.thumbnail,
+      rating: product.rating,
+      stock: product.stock,
       isFavorite: product.isFavorite,
     );
   }
@@ -74,7 +86,7 @@ class ProductModel {
       'price': price,
       'description': description,
       'category': category,
-      'image': image,
+      'thumbnail': thumbnail,
     };
   }
 }

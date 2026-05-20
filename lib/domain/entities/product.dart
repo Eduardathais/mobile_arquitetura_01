@@ -4,7 +4,9 @@ class Product {
   final double price;
   final String description;
   final String category;
-  final String image;
+  final String thumbnail;
+  final double rating;
+  final int stock;
   final bool isFavorite;
 
   const Product({
@@ -13,7 +15,9 @@ class Product {
     required this.price,
     required this.description,
     required this.category,
-    required this.image,
+    required this.thumbnail,
+    this.rating = 0,
+    this.stock = 0,
     this.isFavorite = false,
   });
 
@@ -23,7 +27,9 @@ class Product {
     double? price,
     String? description,
     String? category,
-    String? image,
+    String? thumbnail,
+    double? rating,
+    int? stock,
     bool? isFavorite,
   }) {
     return Product(
@@ -32,7 +38,9 @@ class Product {
       price: price ?? this.price,
       description: description ?? this.description,
       category: category ?? this.category,
-      image: image ?? this.image,
+      thumbnail: thumbnail ?? this.thumbnail,
+      rating: rating ?? this.rating,
+      stock: stock ?? this.stock,
       isFavorite: isFavorite ?? this.isFavorite,
     );
   }

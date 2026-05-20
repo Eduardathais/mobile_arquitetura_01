@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:product_app/domain/repositories/product_repository.dart';
-import 'package:product_app/presentation/pages/initial_page.dart';
-import 'package:product_app/presentation/pages/product_page.dart';
+import 'package:product_app/presentation/pages/login_page.dart';
 import 'package:product_app/presentation/viewmodels/product_list_viewmodel.dart';
 
 Future<void> main() async {
@@ -24,14 +23,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Product App',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const InitialPage(),
-        '/products': (context) => const ProductPage(),
-      },
+      home: const LoginPage(),
     );
   }
 }

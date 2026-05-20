@@ -17,7 +17,9 @@ class ProductRepositoryImpl implements ProductRepository {
       price: m.price,
       description: m.description,
       category: m.category,
-      image: m.image,
+      thumbnail: m.thumbnail,
+      rating: m.rating,
+      stock: m.stock,
       isFavorite: isFavorite,
     );
   }
@@ -47,6 +49,12 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
+  Future<Product> getProductById(int id) async {
+    final model = await remote.getProductById(id);
+    return model.toEntity();
+  }
+
+  @override
   Future<Product> createProduct(Product product) async {
     final payload = ProductModel.fromEntity(product);
     try {
@@ -62,7 +70,7 @@ class ProductRepositoryImpl implements ProductRepository {
         price: product.price,
         description: product.description,
         category: product.category,
-        image: product.image,
+        thumbnail: product.thumbnail,
         isFavorite: product.isFavorite,
       );
       await local.upsert(offline);

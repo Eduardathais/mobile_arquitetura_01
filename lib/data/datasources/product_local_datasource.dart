@@ -57,7 +57,9 @@ class ProductLocalDatasourceInMemory implements ProductLocalDatasource {
       price: p.price,
       description: p.description,
       category: p.category,
-      image: p.image,
+      thumbnail: p.thumbnail,
+      rating: p.rating,
+      stock: p.stock,
       isFavorite: isFavorite,
     );
   }

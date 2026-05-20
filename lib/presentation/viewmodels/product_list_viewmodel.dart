@@ -57,6 +57,10 @@ class ProductListViewModel extends ChangeNotifier {
     ));
   }
 
+  Future<Product> getProductById(int id) {
+    return _repository.getProductById(id);
+  }
+
   void toggleFavorite(int productId) {
     final updated = _state.products
         .map((p) =>

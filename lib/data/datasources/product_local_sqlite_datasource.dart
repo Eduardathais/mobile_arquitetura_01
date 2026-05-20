@@ -10,7 +10,7 @@ class ProductLocalSqliteDatasource implements ProductLocalDatasource {
   final Database _db;
 
   static const _dbName = 'product_app.db';
-  static const _version = 1;
+  static const _version = 2;
 
   static Future<ProductLocalSqliteDatasource> open() async {
     final dir = await getApplicationDocumentsDirectory();
@@ -27,9 +27,19 @@ class ProductLocalSqliteDatasource implements ProductLocalDatasource {
             description TEXT NOT NULL,
             category TEXT NOT NULL,
             image TEXT NOT NULL,
+            rating REAL NOT NULL DEFAULT 0,
+            stock INTEGER NOT NULL DEFAULT 0,
             is_favorite INTEGER NOT NULL DEFAULT 0
           )
         ''');
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          await db.execute(
+              'ALTER TABLE products ADD COLUMN rating REAL NOT NULL DEFAULT 0');
+          await db.execute(
+              'ALTER TABLE products ADD COLUMN stock INTEGER NOT NULL DEFAULT 0');
+        }
       },
     );
     return ProductLocalSqliteDatasource._(db);
@@ -87,7 +97,9 @@ class ProductLocalSqliteDatasource implements ProductLocalDatasource {
       'price': product.price,
       'description': product.description,
       'category': product.category,
-      'image': product.image,
+      'image': product.thumbnail,
+      'rating': product.rating,
+      'stock': product.stock,
       'is_favorite': product.isFavorite ? 1 : 0,
     };
   }

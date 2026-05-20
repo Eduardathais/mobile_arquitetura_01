@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:product_app/presentation/pages/product_form_page.dart';
 import 'package:product_app/presentation/viewmodels/product_list_viewmodel.dart';
 import 'package:product_app/presentation/pages/product_details_page.dart';
+import 'package:product_app/presentation/pages/login_page.dart';
+import 'package:product_app/session/session_controller.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
@@ -21,21 +23,45 @@ class _ProductPageState extends State<ProductPage> {
     });
   }
 
+  void _logout() {
+    SessionController.instance.logout();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const LoginPage()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<ProductListViewModel>();
     final state = viewModel.state;
     final favCount = viewModel.favoriteCount;
+    final user = SessionController.instance.user;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
             'Products${favCount > 0 ? ' ($favCount fav${favCount > 1 ? 's' : ''})' : ''}'),
         actions: [
+          if (user != null)
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: Center(
+                child: Text(
+                  user.firstName,
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
+              ),
+            ),
           IconButton(
             tooltip: 'Atualizar da API',
             onPressed: () => viewModel.loadProducts(forceRefresh: true),
             icon: const Icon(Icons.download),
+          ),
+          IconButton(
+            tooltip: 'Sair',
+            onPressed: _logout,
+            icon: const Icon(Icons.logout),
           ),
         ],
       ),
@@ -53,7 +79,7 @@ class _ProductPageState extends State<ProductPage> {
                           context,
                           MaterialPageRoute(
                             builder: (_) =>
-                                ProductDetailsPage(product: product),
+                                ProductDetailsPage(productId: product.id),
                           ),
                         );
                       },
@@ -64,7 +90,7 @@ class _ProductPageState extends State<ProductPage> {
                         width: 60,
                         height: 60,
                         child: Image.network(
-                          product.image,
+                          product.thumbnail,
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
                             return const Icon(Icons.image_not_supported);
@@ -106,13 +132,13 @@ class _ProductPageState extends State<ProductPage> {
                                       ),
                                       actions: [
                                         TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(dialogContext, false),
+                                          onPressed: () => Navigator.pop(
+                                              dialogContext, false),
                                           child: const Text('Cancelar'),
                                         ),
                                         FilledButton(
-                                          onPressed: () =>
-                                              Navigator.pop(dialogContext, true),
+                                          onPressed: () => Navigator.pop(
+                                              dialogContext, true),
                                           child: const Text('Excluir'),
                                         ),
                                       ],

@@ -38,7 +38,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
       text: product?.description ?? '',
     );
     _categoryController = TextEditingController(text: product?.category ?? '');
-    _imageController = TextEditingController(text: product?.image ?? '');
+    _imageController = TextEditingController(text: product?.thumbnail ?? '');
   }
 
   @override
@@ -65,7 +65,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
         price: double.parse(_priceController.text.trim()),
         description: _descriptionController.text.trim(),
         category: _categoryController.text.trim(),
-        image: _imageController.text.trim(),
+        thumbnail: _imageController.text.trim(),
         isFavorite: widget.initialProduct?.isFavorite ?? false,
       );
 
